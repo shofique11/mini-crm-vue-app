@@ -4,6 +4,7 @@ import Dashboard from './components/DashboardHome.vue';
 import Leads from './components/LeadList.vue';
 import Applications from './components/ApplicationList.vue';
 import Counselors from './components/CounselorsList.vue';
+import CreateLead from './components/CreateLead.vue';
 import NotFound from './components//NotFound.vue';
 
 // Middleware to check authentication
@@ -22,6 +23,12 @@ const routes = [
     path: '/leads', 
     name: 'Leads', 
     component: Leads, 
+    meta: { requiresAuth: true } 
+  },
+  { 
+    path: '/create-lead', 
+    name: 'CreateLead', 
+    component: CreateLead, 
     meta: { requiresAuth: true } 
   },
   { 

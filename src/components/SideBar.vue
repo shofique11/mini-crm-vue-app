@@ -8,6 +8,10 @@
                         class="nav-link text-white bg-opacity-10 rounded py-2 px-3">Dashboard</router-link>
                 </li>
                 <li class="nav-item">
+                    <router-link to="/create-lead"
+                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3">Create Leads</router-link>
+                </li>
+                <li class="nav-item">
                     <router-link to="/leads"
                         class="nav-link text-white bg-opacity-10 rounded py-2 px-3">Leads</router-link>
                 </li>
