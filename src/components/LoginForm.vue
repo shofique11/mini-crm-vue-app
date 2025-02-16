@@ -41,7 +41,7 @@ export default {
       
         console.log('Login successful:', response.data);
         localStorage.setItem('token', response.data.access_token); // Store token
-        //localStorage.setItem('user-info', JSON.stringify(response.data));
+        localStorage.setItem('user-info', JSON.stringify(response.data));
 
         this.$router.push('/dashboard'); // Redirect after login
       } catch (error) {
