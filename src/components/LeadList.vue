@@ -89,10 +89,6 @@ export default {
         // API call to delete lead
         console.log('Deleting lead with ID:', leadId);
       }
-    },
-    logout() {
-      localStorage.removeItem('token');
-      this.$router.push('/login');
     }
   }
 
