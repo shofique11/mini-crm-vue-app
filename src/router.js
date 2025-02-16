@@ -6,13 +6,20 @@ import Applications from './components/ApplicationList.vue';
 import Counselors from './components/CounselorsList.vue';
 import CreateLead from './components/CreateLead.vue';
 import NotFound from './components//NotFound.vue';
-
+import RegisterCRM from './components/RegisterCRM.vue';
 // Middleware to check authentication
 const isAuthenticated = () => !!localStorage.getItem('token');
 
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', name: 'Login', component: Login },
+  
+  { 
+    path: '/register', 
+    name: 'RegisterCRM', 
+    component: RegisterCRM,
+    meta: { requiresAuth: true }
+  },
   { 
     path: '/dashboard', 
     name: 'Dashboard', 

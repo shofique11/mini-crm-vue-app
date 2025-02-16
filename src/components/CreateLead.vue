@@ -32,6 +32,18 @@
                     </select>
                     <div v-if="errors.status" class="text-danger">{{ errors.status[0] }}</div>
                 </div>
+                 <!-- Assign Counselor Field -->
+                <div class="mb-3">
+                    <label class="form-label">Assign Counselor</label>
+                    <select v-model="lead.counselor_id" class="form-control">
+                    <option value="">Select Counselor</option>
+                    <option v-for="counselor in counselors?.data?.userlist" :key="counselor.id" :value="counselor.id">
+                        {{ counselor.name }}
+                    </option>
+                    </select>
+                    <div v-if="errors.counselor_id" class="text-danger">{{ errors.counselor_id[0] }}</div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Create Lead</button>
             </form>
             <div v-if="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
@@ -47,6 +59,7 @@ import NavberMenu from './NavberMenu.vue';
 export default {
     data() {
         return {
+            counselors: { data: { userlist: [] } },
             lead: {
                 name: "",
                 email: "",
@@ -64,6 +77,7 @@ export default {
         NavberMenu,
     },
     async mounted() {
+        await this.fetchCounselor();
         const token = localStorage.getItem('token');
         if (!token) {
             console.error("Token is missing. Redirecting to login.");
@@ -72,6 +86,18 @@ export default {
         }
     },
     methods: {
+        async fetchCounselor() {
+        try {
+            const response = await api.get('/counselor-list', {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            });
+            this.counselors = response.data;
+            console.log(this.counselors);
+            
+        } catch (error) {
+            console.error('Error fetching counselors:', error);
+        }
+        },
         async submitLead() {
             try {
                 if (!this.lead.name || !this.lead.email || !this.lead.status) {
@@ -91,7 +117,7 @@ export default {
                 this.errors = {};
                 setTimeout(() => {
                     this.successMessage = "";
-                }, 5000);
+                }, 3000);
             } catch (error) {
                 if (error.response && error.response.data.errors) {
                     this.errors = error.response.data.errors; // Store validation errors
