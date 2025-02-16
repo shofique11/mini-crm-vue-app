@@ -1,27 +1,84 @@
 <template>
     <div class="d-flex vh-100 bg-light">
-        <SideBar />
-        <div class="flex-grow-1 d-flex flex-column">
-            <NavberMenu />
-            <div class="container mt-4">
-                <h1>Application List</h1>
-            </div>
+      <SideBar />
+      <div class="flex-grow-1 d-flex flex-column">
+        <NavberMenu />
+        <div class="container mt-4">
+          <h2 class="mb-3">Leads List</h2>
+          <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Counselor</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(application, index) in applications" :key="application.id">
+                <td>{{ index + 1 }}</td>
+                <td>{{ application.lead_id }}</td>
+                <td>
+                  <span :class="statusClass(application.status)">
+                    {{ application.status }}
+                  </span>
+                </td>
+                <td>{{ application.counselor.name }}</td>
+                <td>
+                  <button v-if="application.counselor.role === 'counselor'"  class="btn btn-primary btn-sm me-2"
+                    @click="changeStatus(application)">Change Status</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
-</template>
-<script>
-import SideBar from './SideBar.vue';
-import NavberMenu from './NavberMenu.vue';
-export default {
+  </template>
+  <script>
+  import api from './axios';
+  import SideBar from './SideBar.vue';
+  import NavberMenu from './NavberMenu.vue';
+  export default {
     data() {
-        return {
-            leads: 0,
-        }
+      return {
+        applications: [],
+      }
     },
     components: {
-        SideBar,
-        NavberMenu
+      SideBar,
+      NavberMenu
+    },
+    async mounted() {
+      await this.fetchApplication();
+    },
+    methods: {
+      async fetchApplication() {
+        try {
+          const response = await api.get('/applications', {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          });
+          this.applications = response.data;
+          this.applications = this.applications.data.applications;
+          console.log(this.applications);
+        } catch (error) {
+          console.error('Error fetching applications:', error);
+        }
+      },
+      statusClass(status) {
+        return {
+          'badge bg-primary': status === 'In Progress',
+          'badge bg-danger': status === 'Rejected',
+          'badge bg-secondary': status === 'Approved',
+        };
+      },
+      changeStatus(application) {
+        // Handle lead editing logic
+        console.log('Editing application:', application);
+      }
     }
-}
-</script>
-<style></style>
+  
+  }
+  </script>
+  <style></style>
