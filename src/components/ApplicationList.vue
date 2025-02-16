@@ -12,7 +12,6 @@
                 <th>Name</th>
                 <th>Status</th>
                 <th>Counselor</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -25,10 +24,6 @@
                   </span>
                 </td>
                 <td>{{ application.counselor.name }}</td>
-                <td>
-                  <button v-if="application.counselor.role === 'counselor'"  class="btn btn-primary btn-sm me-2"
-                    @click="changeStatus(application)">Change Status</button>
-                </td>
               </tr>
             </tbody>
           </table>

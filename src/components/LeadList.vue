@@ -54,7 +54,7 @@ export default {
   },
   components: {
     SideBar,
-    NavberMenu
+    NavberMenu,
   },
   async mounted() {
     await this.fetchLeads();
