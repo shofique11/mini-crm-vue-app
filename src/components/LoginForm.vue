@@ -14,7 +14,7 @@
           <input type="password" id="password" v-model="password" placeholder="Enter your password" required />
         </div>
         <button type="submit">Login</button>
-        <p>If you have doon't account, <router-link to="/register" class="nav-link  bg-opacity-10 rounded py-2 px-3">Register here</router-link></p>
+        <p>If you have doon't account, counselor <router-link to="/register" class="nav-link  bg-opacity-10 rounded py-2 px-3">Register here</router-link></p>
       </form>
     </div>
   </div>
@@ -23,7 +23,6 @@
 <script>
 import axios from 'axios';
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
   data() {
     return {
       email: '',

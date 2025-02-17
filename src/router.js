@@ -14,13 +14,7 @@ const isAuthenticated = () => !!localStorage.getItem('token');
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', name: 'Login', component: Login },
-  
-  { 
-    path: '/register', 
-    name: 'RegisterCRM', 
-    component: RegisterCRM,
-    meta: { requiresAuth: true }
-  },
+  { path: '/register', name: 'RegisterCRM', component: RegisterCRM },
   { 
     path: '/dashboard', 
     name: 'Dashboard', 
@@ -69,6 +63,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !isAuthenticated()) {
     next('/login');
+  } else if ( to.meta.requiresAuth && to.path === "/register") {
+    next("/register");
   } else {
     next();
   }
