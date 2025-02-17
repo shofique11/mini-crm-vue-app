@@ -13,11 +13,15 @@
                 </li>
                 <li class="nav-item">
                     <router-link to="/leads"
-                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3">Leads</router-link>
+                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3" v-if="isAdmin">Leads</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/my-leads"
+                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3" v-if="isCounselor">My Leads</router-link>
                 </li>
                 <li class="nav-item">
                     <router-link to="/applications"
-                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3">Applications</router-link>
+                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3" v-if="isAdmin">Applications</router-link>
                 </li>
                 <li class="nav-item">
                     <router-link to="/counselors"
@@ -30,7 +34,6 @@
 </template>
 <script>
 export default {
-    // eslint-disable-next-line vue/multi-word-component-names
     data() {
         return {
             userRole: null,
@@ -39,6 +42,9 @@ export default {
     computed: {
         isAdmin() {
             return this.userRole === "admin";
+        },
+        isCounselor() {
+            return this.userRole === "counselor";
         }
     },
     mounted(){

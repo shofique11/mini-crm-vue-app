@@ -7,6 +7,7 @@ import Counselors from './components/CounselorsList.vue';
 import CreateLead from './components/CreateLead.vue';
 import NotFound from './components//NotFound.vue';
 import RegisterCRM from './components/RegisterCRM.vue';
+import AssignedLead from './components/AssignedLead.vue';
 // Middleware to check authentication
 const isAuthenticated = () => !!localStorage.getItem('token');
 
@@ -36,6 +37,12 @@ const routes = [
     path: '/create-lead', 
     name: 'CreateLead', 
     component: CreateLead, 
+    meta: { requiresAuth: true } 
+  },
+  { 
+    path: '/my-leads', 
+    name: 'AssignedLead', 
+    component: AssignedLead, 
     meta: { requiresAuth: true } 
   },
   { 
