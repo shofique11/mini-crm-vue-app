@@ -100,12 +100,10 @@ export default {
         },
         async submitLead() {
             try {
-                if (!this.lead.name || !this.lead.email || !this.lead.status) {
+                if (!this.lead.name || !this.lead.email || !this.lead.status || !this.lead.counselor_id) {
                     console.error("Please fill in all required fields.");
                     return;
                 }
-
-                this.lead.counselor_id = JSON.parse(localStorage.getItem('user-info')).id;
 
                  await api.post('/leads', this.lead, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },

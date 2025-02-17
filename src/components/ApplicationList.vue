@@ -4,7 +4,7 @@
       <div class="flex-grow-1 d-flex flex-column">
         <NavberMenu />
         <div class="container mt-4">
-          <h2 class="mb-3">Leads List</h2>
+          <h2 class="mb-3">Application List</h2>
           <table class="table table-striped table-bordered">
             <thead class="thead-dark">
               <tr>
@@ -67,10 +67,6 @@
           'badge bg-danger': status === 'Rejected',
           'badge bg-secondary': status === 'Approved',
         };
-      },
-      changeStatus(application) {
-        // Handle lead editing logic
-        console.log('Editing application:', application);
       }
     }
   
