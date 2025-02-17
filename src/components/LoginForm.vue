@@ -14,7 +14,7 @@
           <input type="password" id="password" v-model="password" placeholder="Enter your password" required />
         </div>
         <button type="submit">Login</button>
-        <p>If you have doon't account, Register here</p>
+        <p>If you have doon't account, counselor <router-link to="/register" class="nav-link  bg-opacity-10 rounded py-2 px-3">Register here</router-link></p>
       </form>
     </div>
   </div>
@@ -23,7 +23,6 @@
 <script>
 import axios from 'axios';
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
   data() {
     return {
       email: '',
@@ -41,7 +40,7 @@ export default {
       
         console.log('Login successful:', response.data);
         localStorage.setItem('token', response.data.access_token); // Store token
-        //localStorage.setItem('user-info', JSON.stringify(response.data));
+        localStorage.setItem('user-info', JSON.stringify(response.data));
 
         this.$router.push('/dashboard'); // Redirect after login
       } catch (error) {

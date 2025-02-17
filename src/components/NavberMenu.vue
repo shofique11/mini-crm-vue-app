@@ -25,7 +25,7 @@ export default {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         this.user = response.data;
-        console.log(this.user);
+        localStorage.setItem('user-info', JSON.stringify(response.data));
       } catch (error) {
         console.error('Error fetching user:', error);
       }

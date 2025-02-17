@@ -4,14 +4,17 @@ import Dashboard from './components/DashboardHome.vue';
 import Leads from './components/LeadList.vue';
 import Applications from './components/ApplicationList.vue';
 import Counselors from './components/CounselorsList.vue';
+import CreateLead from './components/CreateLead.vue';
 import NotFound from './components//NotFound.vue';
-
+import RegisterCRM from './components/RegisterCRM.vue';
+import AssignedLead from './components/AssignedLead.vue';
 // Middleware to check authentication
 const isAuthenticated = () => !!localStorage.getItem('token');
 
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', name: 'Login', component: Login },
+  { path: '/register', name: 'RegisterCRM', component: RegisterCRM },
   { 
     path: '/dashboard', 
     name: 'Dashboard', 
@@ -22,6 +25,18 @@ const routes = [
     path: '/leads', 
     name: 'Leads', 
     component: Leads, 
+    meta: { requiresAuth: true } 
+  },
+  { 
+    path: '/create-lead', 
+    name: 'CreateLead', 
+    component: CreateLead, 
+    meta: { requiresAuth: true } 
+  },
+  { 
+    path: '/my-leads', 
+    name: 'AssignedLead', 
+    component: AssignedLead, 
     meta: { requiresAuth: true } 
   },
   { 
@@ -48,6 +63,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !isAuthenticated()) {
     next('/login');
+  } else if ( to.meta.requiresAuth && to.path === "/register") {
+    next("/register");
   } else {
     next();
   }
