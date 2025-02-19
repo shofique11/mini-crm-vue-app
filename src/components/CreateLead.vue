@@ -3,7 +3,8 @@
         <SideBar />
         <div class="flex-grow-1 d-flex flex-column">
             <NavberMenu />
-            <h4>Create New Lead</h4>
+            <div class="container">
+                <h3>Create New Lead</h3>
             <div v-if="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
             <form @submit.prevent="submitLead" class="leadBox">
                 <div class="mb-3">
@@ -23,6 +24,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Create Lead</button>
             </form>
+        </div>
             <div v-if="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
         </div>
     </div>
@@ -109,4 +111,8 @@ export default {
     background-color: #fff;
     padding: 30px 60px;
   }
+  .btn-primary {
+    background-color: #243b79e3;
+    border-color: #243b79e3;
+    }
 </style>

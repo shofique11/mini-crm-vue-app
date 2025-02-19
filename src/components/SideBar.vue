@@ -8,28 +8,28 @@
                         class="nav-link text-white bg-opacity-10 rounded py-2 px-3">Dashboard</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/create-lead"
-                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3" v-if="isAdmin">Create Leads</router-link>
+                    <router-link to="/create-lead" class="nav-link text-white bg-opacity-10 rounded py-2 px-3"
+                        v-if="isAdmin">Create Leads</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/leads"
-                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3"  v-if="isAdmin">Leads</router-link>
+                    <router-link to="/leads" class="nav-link text-white bg-opacity-10 rounded py-2 px-3"
+                        v-if="isAdmin">Leads</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/my-leads"
-                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3" >My Leads</router-link>
+                    <router-link to="/my-leads" class="nav-link text-white bg-opacity-10 rounded py-2 px-3"
+                        v-if="isCounselor">My Leads</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/applications"
-                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3"  v-if="isAdmin">Applications</router-link>
+                    <router-link to="/applications" class="nav-link text-white bg-opacity-10 rounded py-2 px-3"
+                        v-if="isAdmin">Applications</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/my-applications"
-                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3" >My Applications</router-link>
+                    <router-link to="/my-applications" class="nav-link text-white bg-opacity-10 rounded py-2 px-3"
+                        v-if="isCounselor">My Applications</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/counselors"
-                        class="nav-link text-white bg-opacity-10 rounded py-2 px-3"  v-if="isAdmin">Counselors</router-link>
+                    <router-link to="/counselors" class="nav-link text-white bg-opacity-10 rounded py-2 px-3"
+                        v-if="isAdmin">Counselors</router-link>
                 </li>
             </ul>
         </nav>
@@ -40,7 +40,7 @@
 export default {
     data() {
         return {
-            userRole: null,
+            userRole: "", 
         }
     },
     computed: {
@@ -51,20 +51,22 @@ export default {
             return this.userRole === "counselor";
         }
     },
-    mounted(){
+    mounted() {
         const userInfo = JSON.parse(localStorage.getItem('user-info'));
         this.userRole = userInfo ? userInfo.role : null;
+       //this.refreshUserRole();
     },
     methods: {
         logout() {
             localStorage.removeItem('token');
+            localStorage.removeItem("role"); // Clear role
             this.$router.push('/login');
         }
     }
 }
 </script>
 <style scoped>
-.bg-primary{
+.bg-primary {
     background-color: #243b79e3 !important;
 }
 </style>
