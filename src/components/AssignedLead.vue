@@ -31,7 +31,6 @@
               <td>
                 <button class="btn btn-success btn-sm me-2" @click="createApplication(lead)">Move
                   Application</button>
-                <button class="btn btn-primary btn-sm me-2" @click="changeStatus(lead)">Update Status</button>
               </td>
             </tr>
           </tbody>
@@ -66,34 +65,6 @@
       </div>
     </div>
   </div>
-
-    <!-- Status change  Modal -->
-    <div v-if="isStatusModalOpen" class="modal show d-block" style="background: rgba(0,0,0,0.5)">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Update lead Status</h5>
-          <button type="button" class="btn-close" @click="isStatusModalOpen = false"></button>
-        </div>
-        <div class="modal-body">
-          <form @submit.prevent="saveStatus">
-            <div class="mb-3">
-                    <label class="form-label">Status</label>
-                    <select v-model="editedLead.status" class="form-control">
-                        <option value="">Select Status</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Bad Timing">Bad Timing</option>
-                        <option value="Not Interested">Not Interested</option>
-                        <option value="Not Qualified">Not Qualified</option>
-                    </select>
-                </div>
-            <button type="submit" class="btn btn-success">Save Status</button>
-            <button type="button" class="btn btn-secondary ms-2" @click="isStatusModalOpen = false">Cancel</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 <script>
 import api from './axios';
@@ -104,15 +75,6 @@ export default {
     return {
       leads: [],
       isEditModalOpen: false,
-      isStatusModalOpen: false,
-      editedLead: {
-        id: null,
-        name: "",
-        email: "",
-        phone: "",
-        status: "",
-        counselor_id:""
-      },
       applicationLead: {
         lead_id: null,
         counselor_id: null,
@@ -177,6 +139,7 @@ export default {
         setTimeout(() => {
           this.successMessage = "";
         }, 3000);
+        await this.fetchAssignLeads();
 
       } catch (error) {
         if (error.response) {
@@ -189,30 +152,6 @@ export default {
           this.errorMessage = "An unexpected error occurred. Please try again.";
         }
         console.error("API Error:", error);
-      }
-    },
-    changeStatus(lead) {
-     // this.editedLead = JSON.parse(JSON.stringify(lead));
-      this.editedLead = structuredClone(lead);
-      this.isStatusModalOpen = true;
-    },
-    async saveStatus() {
-      try {
-        const index = this.leads.findIndex((l) => l.id === this.editedLead.id);
-        if (index !== -1) {
-          await api.put(`/leads/${this.editedLead.id}`, this.editedLead, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-          });
-          this.leads[index] = { ...this.editedLead };
-          this.isStatusModalOpen = false;
-          this.successMessage = "Lead status updated successfully!";
-          setTimeout(() => {
-                    this.successMessage = "";
-                }, 3000);
-        }
-      } catch (error) {
-        console.error("Error updating lead:", error);
-        alert("Failed to update lead. Please try again.");
       }
     },
     closeModal() {

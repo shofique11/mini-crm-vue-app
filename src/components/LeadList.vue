@@ -96,7 +96,6 @@ export default {
       errors: {},
       errorMessage: "",
       successMessage: "",
-      componentKey: 0,
     }
   },
   components: {
@@ -108,9 +107,7 @@ export default {
     await this.fetchCounselor();
   },
   methods: {
-    refreshComponent() {
-    this.componentKey++; // Forces a re-render
-  },
+   
     async fetchLeads() {
       try {
         const response = await api.get('/leads', {
@@ -161,7 +158,7 @@ export default {
             this.successMessage = "";
           }, 3000);
         }
-        this.refreshComponent();
+        await this.fetchLeads();
       } catch (error) {
         console.error("Error updating lead:", error);
         alert("Failed to assaign lead. Please try again.");
