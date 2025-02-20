@@ -41,7 +41,13 @@ export default {
         console.log('Login successful:', response.data);
         localStorage.setItem('token', response.data.access_token); // Store token
         localStorage.setItem('user-info', JSON.stringify(response.data));
-        this.$router.push('/dashboard'); // Redirect after login
+        if (response.data.user.role === 'admin') {
+            this.$router.push('/admin-dashboard'); // Redirect Admin
+        } else if (response.data.user.role === 'counselor') {
+            this.$router.push('/counselor-dashboard'); // Redirect Counselor
+        } else {
+            this.$router.push('/dashboard'); // Default Dashboard
+        }
       } catch (error) {
         this.errorMessage = error.response?.data?.message || 'Login failed!';
       }

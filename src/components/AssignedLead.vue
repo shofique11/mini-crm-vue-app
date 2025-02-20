@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex vh-100 bg-light">
-    <SideBar />
+    <SideBar2 />
     <div class="flex-grow-1 d-flex flex-column">
       <NavberMenu />
       <div class="container mt-4">
-        <h2 class="mb-3">My Leads</h2>
+        <h4 class="mb-3">My Leads</h4>
         <div v-if="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
         <table class="table table-striped table-bordered">
           <thead class="thead-dark">
@@ -68,7 +68,7 @@
 </template>
 <script>
 import api from './axios';
-import SideBar from './SideBar.vue';
+import SideBar2 from './SideBar2.vue';
 import NavberMenu from './NavberMenu.vue';
 export default {
   data() {
@@ -86,7 +86,7 @@ export default {
     }
   },
   components: {
-    SideBar,
+    SideBar2,
     NavberMenu,
   },
   async mounted() {

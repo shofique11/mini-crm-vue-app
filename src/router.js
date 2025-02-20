@@ -9,6 +9,9 @@ import NotFound from './components//NotFound.vue';
 import RegisterCRM from './components/RegisterCRM.vue';
 import AssignedLead from './components/AssignedLead.vue';
 import CounselorApplication from './components/CounselorApplication.vue';
+import AdminDashboard from './components/adminDashboard.vue';
+import CounselorDashboard from './components/CounselorDashboard.vue';
+
 // Middleware to check authentication
 const isAuthenticated = () => !!localStorage.getItem('token');
 
@@ -23,40 +26,52 @@ const routes = [
     meta: { requiresAuth: true }
   },
   { 
+    path: '/admin-dashboard', 
+    name: 'AdminDashboard', 
+    component: AdminDashboard,
+    meta: { requiresAuth: true, role: 'admin' }
+  },
+  { 
+    path: '/counselor-dashboard', 
+    name: 'CounselorDashboard', 
+    component: CounselorDashboard,
+    meta: { requiresAuth: true, role: 'counselor' }
+  },
+  { 
     path: '/leads', 
     name: 'Leads', 
     component: Leads, 
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true, role: 'admin' } 
   },
   { 
     path: '/create-lead', 
     name: 'CreateLead', 
     component: CreateLead, 
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true, role: 'admin' } 
   },
   { 
     path: '/my-leads', 
     name: 'AssignedLead', 
     component: AssignedLead, 
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true, role: 'counselor' } 
   },
   { 
     path: '/applications', 
     name: 'Applications', 
     component: Applications, 
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true, role: 'admin' } 
   },
   { 
     path: '/my-applications', 
     name: 'CounselorApplication', 
     component: CounselorApplication, 
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true, role: 'counselor' } 
   },
   { 
     path: '/counselors', 
     name: 'Counselors', 
     component: Counselors, 
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true, role: 'admin' } 
   },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ];

@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex vh-100 bg-light">
-        <SideBar />
+        <SideBar2 />
         <div class="flex-grow-1 d-flex flex-column">
             <NavberMenu />
             <div class="container mt-4">
@@ -77,7 +77,7 @@
 </template>
 <script>
 import api from './axios';
-import SideBar from './SideBar.vue';
+import SideBar2 from './SideBar2.vue';
 import NavberMenu from './NavberMenu.vue';
 export default {
     data() {
@@ -94,7 +94,7 @@ export default {
         }
     },
     components: {
-        SideBar,
+        SideBar2,
         NavberMenu
     },
     async mounted() {
