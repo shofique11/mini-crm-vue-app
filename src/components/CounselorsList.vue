@@ -4,7 +4,7 @@
       <div class="flex-grow-1 d-flex flex-column">
         <NavberMenu />
         <div class="container mt-4">
-          <h2 class="mb-3">Counselor List</h2>
+          <h4 class="mb-3">Counselor List</h4>
           <table class="table table-striped table-bordered">
             <thead class="thead-dark">
               <tr>
@@ -15,8 +15,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="counselor in counselors?.data?.userlist" :key="counselor.id" :value="counselor.id">
-                <td>{{ counselor.id }}</td>
+              <tr v-for="(counselor, index) in counselors?.data?.userlist" :key="counselor.id" :value="counselor.id">
+                <td>{{ index + 1 }}</td>
                 <td>{{ counselor.name }}</td>
                 <td>{{ counselor.email }}</td>
                 <td>{{ counselor.role }}</td>
