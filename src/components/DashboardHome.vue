@@ -2,7 +2,7 @@
   <div class="d-flex vh-100 bg-light">
     <!-- Sidebar -->
 
-    <SideBar />
+    <!-- <SideBar /> -->
     <!-- Main Content -->
     <div class="flex-grow-1 d-flex flex-column">
       <!-- Top Navbar -->
@@ -17,7 +17,7 @@
               </div>
               <div class="ms-3">
                 <h5 class="mb-1">Total Leads</h5>
-                <p class="h4 fw-bold">{{ stats.leads }}</p>
+                <p class="h4 fw-bold">{{ stats.total_leads }}</p>
               </div>
             </div>
           </div>
@@ -29,7 +29,7 @@
               </div>
               <div class="ms-3">
                 <h5 class="mb-1">Total Counselors</h5>
-                <p class="h4 fw-bold">{{ stats.counselors }}</p>
+                <p class="h4 fw-bold">{{ stats.total_counselors }}</p>
               </div>
             </div>
           </div>
@@ -41,7 +41,7 @@
               </div>
               <div class="ms-3">
                 <h5 class="mb-1">Total Applications</h5>
-                <p class="h4 fw-bold">{{ stats.applications }}</p>
+                <p class="h4 fw-bold">{{ stats.total_applications }}</p>
               </div>
             </div>
           </div>
@@ -53,7 +53,7 @@
 
 <script>
 //import api from './axios'; // Axios instance
-import SideBar from './SideBar.vue';
+//import SideBar from './SideBar.vue';
 import NavberMenu from './NavberMenu.vue';
 
 export default {
@@ -61,14 +61,14 @@ export default {
   data() {
     return {
       stats: {
-        leads: 0,
-        counselors: 0,
-        applications: 0
+        total_leads: 0,
+        total_counselors: 0,
+        total_applications: 0
       }
     };
   },
   components: {
-    SideBar,
+    //SideBar,
     NavberMenu
   },
 };

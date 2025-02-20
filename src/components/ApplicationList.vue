@@ -4,26 +4,36 @@
       <div class="flex-grow-1 d-flex flex-column">
         <NavberMenu />
         <div class="container mt-4">
-          <h2 class="mb-3">Application List</h2>
+          <h4 class="mb-3">Application List</h4>
           <table class="table table-striped table-bordered">
             <thead class="thead-dark">
               <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Status</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Application Status</th>
                 <th>Counselor</th>
+                <th>Lead Status</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(application, index) in applications" :key="application.id">
                 <td>{{ index + 1 }}</td>
-                <td>{{ application.lead_id }}</td>
+                <td>{{ application.lead.name }}</td>
+                <td>{{ application.lead.email }}</td>
+                <td>{{ application.lead.phone }}</td>
                 <td>
                   <span :class="statusClass(application.status)">
                     {{ application.status }}
                   </span>
                 </td>
                 <td>{{ application.counselor.name }}</td>
+                <td>
+                  <span :class="statusLeadClass(application.lead.status)">
+                    {{ application.lead.status }}
+                  </span>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -67,7 +77,15 @@
           'badge bg-danger': status === 'Rejected',
           'badge bg-secondary': status === 'Approved',
         };
-      }
+      },
+      statusLeadClass(status) {
+      return {
+        'badge bg-primary': status === 'In Progress',
+        'badge bg-warning': status === 'Bad Timing',
+        'badge bg-danger': status === 'Not Interested',
+        'badge bg-secondary': status === 'Not Qualified',
+      };
+    },
     }
   
   }

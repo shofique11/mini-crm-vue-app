@@ -3,9 +3,10 @@
         <SideBar />
         <div class="flex-grow-1 d-flex flex-column">
             <NavberMenu />
-            <h4>Create New Lead</h4>
+            <div class="container">
+                <h3>Create New Lead</h3>
             <div v-if="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
-            <form @submit.prevent="submitLead">
+            <form @submit.prevent="submitLead" class="leadBox">
                 <div class="mb-3">
                     <label class="form-label">Name</label>
                     <input type="text" v-model="lead.name" class="form-control" placeholder="Enter lead name" />
@@ -21,31 +22,9 @@
                     <input type="text" v-model="lead.phone" class="form-control" placeholder="Enter lead phone" />
                     <div v-if="errors.phone" class="text-danger">{{ errors.phone[0] }}</div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Status</label>
-                    <select v-model="lead.status" class="form-control">
-                        <option value="">Select Status</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Bad Timing">Bad Timing</option>
-                        <option value="Not Interested">Not Interested</option>
-                        <option value="Not Qualified">Not Qualified</option>
-                    </select>
-                    <div v-if="errors.status" class="text-danger">{{ errors.status[0] }}</div>
-                </div>
-                 <!-- Assign Counselor Field -->
-                <div class="mb-3">
-                    <label class="form-label">Assign Counselor</label>
-                    <select v-model="lead.counselor_id" class="form-control">
-                    <option value="">Select Counselor</option>
-                    <option v-for="counselor in counselors?.data?.userlist" :key="counselor.id" :value="counselor.id">
-                        {{ counselor.name }}
-                    </option>
-                    </select>
-                    <div v-if="errors.counselor_id" class="text-danger">{{ errors.counselor_id[0] }}</div>
-                </div>
-
                 <button type="submit" class="btn btn-primary">Create Lead</button>
             </form>
+        </div>
             <div v-if="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
         </div>
     </div>
@@ -64,8 +43,8 @@ export default {
                 name: "",
                 email: "",
                 phone: "",
-                status: "",
-                counselor_id: '',
+                // status: "",
+                // counselor_id: '',
             },
             errors: {},
             errorMessage: "",
@@ -100,7 +79,7 @@ export default {
         },
         async submitLead() {
             try {
-                if (!this.lead.name || !this.lead.email || !this.lead.status || !this.lead.counselor_id) {
+                if (!this.lead.name || !this.lead.email) {
                     console.error("Please fill in all required fields.");
                     return;
                 }
@@ -111,7 +90,7 @@ export default {
 
                 console.log('Lead created successfully');
                 this.successMessage = "Lead created successfully!";
-                this.lead = { name: "", email: "", phone: "", status: "", counselor_id: '' };
+                this.lead = { name: "", email: "", phone: "" };
                 this.errors = {};
                 setTimeout(() => {
                     this.successMessage = "";
@@ -127,3 +106,13 @@ export default {
     }
 };
 </script>
+<style scoped>
+  .leadBox{
+    background-color: #fff;
+    padding: 30px 60px;
+  }
+  .btn-primary {
+    background-color: #243b79e3;
+    border-color: #243b79e3;
+    }
+</style>
