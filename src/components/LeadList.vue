@@ -32,10 +32,10 @@
               <td>{{ lead.counselor?.name ?? 'Not Assigned' }}</td>
               <button class="btn btn-primary btn-sm me-2" @click="assaignLead(lead)"
                 :disabled="!!lead.counselor?.name">Lead Assaign</button>
-              <!-- <button class="btn btn-success btn-sm me-2" @click="editLead(lead)"
-                :disabled="!!lead.counselor?.name">Edit</button> -->
+              <button class="btn btn-success btn-sm me-2" @click="editLead(lead)"
+                :disabled="!!lead.counselor?.name">Edit</button>
               <button class="btn btn-danger btn-sm me-2" @click="deleteLead(lead.id)"
-                :disabled="!!lead.counselor?.name">Delete</button>
+                >Delete</button>
             </tr>
           </tbody>
         </table>
@@ -74,6 +74,50 @@
       </div>
     </div>
   </div>
+
+  <!-- Edit lead  Modal -->
+  <div v-if="isEditModalOpen" class="modal show d-block" style="background: rgba(0,0,0,0.5)">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit lead</h5>
+          <button type="button" class="btn-close" @click="isEditModalOpen = false"></button>
+        </div>
+        <div class="modal-body">
+          <form @submit.prevent="saveUpdate">
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input type="text" v-model="updateLead.name" class="form-control" placeholder="Enter lead name" />
+              <div v-if="errors.name" class="text-danger">{{ errors.name[0] }}</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" v-model="updateLead.email" class="form-control" placeholder="Enter lead email" />
+              <div v-if="errors.email" class="text-danger">{{ errors.email[0] }}</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone</label>
+              <input type="text" v-model="updateLead.phone" class="form-control" placeholder="Enter phone" />
+              <div v-if="errors.phone" class="text-danger">{{ errors.phone[0] }}</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Select Status</label>
+              <select v-model="updateLead.status" class="form-control">
+                  <option value="">Select Status</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Bad Timing">Bad Timing</option>
+                  <option value="Not Interested">Not Interested</option>
+                  <option value="Not Qualified">Not Qualified</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success">Save Update</button>
+            <button type="button" class="btn btn-secondary ms-2" @click="isEditModalOpen = false">Cancel</button>
+          </form>
+          <div v-if="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import api from './axios';
@@ -84,6 +128,7 @@ export default {
     return {
       leads: [],
       isAssaignModalOpen: false,
+      isEditModalOpen: false,
       singleLead: {
         id: null,
         name: "",
@@ -92,6 +137,7 @@ export default {
         status: "",
         counselor_id: ""
       },
+      updateLead:{},
       counselors: { data: { userlist: [] } },
       errors: {},
       errorMessage: "",
@@ -167,6 +213,30 @@ export default {
     closeModal() {
       this.isAssaignModalOpen = false;
     },
+    editLead(lead){
+      this.updateLead = JSON.parse(JSON.stringify(lead));
+      this.isEditModalOpen = true;
+    },
+    async saveUpdate() {
+      try {
+        const index = this.leads.findIndex((l) => l.id === this.updateLead.id);
+        if (index !== -1) {
+          await api.put(`/leads/${this.updateLead.id}`, this.updateLead, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          });
+          this.leads[index] = { ...this.updateLead };
+          this.isEditModalOpen = false;
+          this.successMessage = "Lead edited successfully!";
+          setTimeout(() => {
+            this.successMessage = "";
+          }, 3000);
+        }
+        await this.fetchLeads();
+      } catch (error) {
+        console.error("Error updating lead:", error);
+        alert("Failed to edit lead. Please try again.");
+      }
+    },
     async deleteLead(leadId) {
       try {
         await api.delete(`/leads/${leadId}`, {
@@ -186,7 +256,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 <style scoped>
@@ -194,5 +263,13 @@ export default {
   background-color: #243b79;
   border: #243b79;
   color: #fff;
+}
+.btn-success{
+  background: #198754;
+  color: #fff;
+}
+.btn-danger{
+    background: #ff0000bd;
+    color: #fff;
 }
 </style>
