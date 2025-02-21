@@ -4,6 +4,7 @@
     <div class="login-box">
       <div><img alt="Vue logo" src="../assets/logo.png" width="250px"></div>
       <h2>Login</h2>
+      <div v-if="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
       <form @submit.prevent="loginFrom">
         <div class="input-group">
           <label for="email">Email</label>
@@ -14,26 +15,29 @@
           <input type="password" id="password" v-model="password" placeholder="Enter your password" required />
         </div>
         <button type="submit">Login</button>
-        <p>If you have doon't account, counselor <router-link to="/register" class="nav-link  bg-opacity-10 rounded py-2 px-3">Register here</router-link></p>
+        <p>If you have doon't account, counselor <router-link to="/register" class="nav-link  bg-opacity-10 rounded py-2 px-3 regist-link">Register here</router-link></p>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
+import api from './axios';
 export default {
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      errors: {},
+      errorMessage: ""
     };
   },
   methods: {
     async loginFrom() {
       console.log("Email:", this.email);
       try {
-        const response = await axios.post('http://localhost:8000/api/login', {
+        const response = await api.post('login', {
           email: this.email,
           password: this.password
         });
@@ -49,7 +53,7 @@ export default {
             this.$router.push('/dashboard'); // Default Dashboard
         }
       } catch (error) {
-        this.errorMessage = error.response?.data?.message || 'Login failed!';
+        this.errorMessage = error.response?.data?.message || 'Invalid Email,Password!';
       }
     }
   }
@@ -118,5 +122,16 @@ button {
 
 button:hover {
   background: #5a67d8;
+}
+p{
+    font-size: 14px;
+    margin-top: 10px;
+    line-height: 14px;
+}
+.regist-link{
+  color: #243b79;
+}
+.regist-link:hover{
+  text-decoration: underline;
 }
 </style>
