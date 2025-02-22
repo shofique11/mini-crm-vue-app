@@ -12,6 +12,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -20,6 +21,9 @@
                 <td>{{ counselor.name }}</td>
                 <td>{{ counselor.email }}</td>
                 <td>{{ counselor.role }}</td>
+                <td><span :class="statusClass(counselor.status)">
+                  {{ counselor.status }}
+                </span></td>
               </tr>
             </tbody>
           </table>
@@ -59,9 +63,8 @@
       },
       statusClass(status) {
         return {
-          'badge bg-primary': status === 'In Progress',
-          'badge bg-danger': status === 'Rejected',
-          'badge bg-secondary': status === 'Approved',
+          'badge bg-primary': status === 'active',
+          'badge bg-secondary': status === 'inactive',
         };
       },
       changeStatus(application) {
