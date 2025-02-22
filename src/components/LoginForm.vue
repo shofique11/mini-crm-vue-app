@@ -5,7 +5,7 @@
       <div><img alt="Vue logo" src="../assets/logo.png" width="250px"></div>
       <h3>Login</h3>
       <div v-if="message" class="alert alert-success mt-3">{{ message }}</div>
-      <div v-if="errorMessage" class=" mt-3">{{ errorMessage }}</div>
+      <div v-if="errorMessage" class="alert-danger mt-3">{{ errorMessage }}</div>
       <form @submit.prevent="loginFrom" v-if="loginForm">
         <div class="input-group">
           <label for="email">Email</label>
